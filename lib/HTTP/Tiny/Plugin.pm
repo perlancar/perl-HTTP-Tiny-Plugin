@@ -48,6 +48,7 @@ sub _run_hooks {
         unless ($opts->{all}) {
             last unless $status == -1;
         }
+        last if $status == 98 || $status == 99;
     }
     $status // -1;
 }
@@ -78,7 +79,7 @@ sub request {
 
  # to set plugins locally
  {
-     my @old_plugins = HTTP::Tiny::Plugin->set_plugins(Retry=>{retries=>3, retry_delay=>2}, 'Cache');
+     my @old_plugins = HTTP::Tiny::Plugin->set_plugins(Retry=>{max_attempts=>3, delay=>2}, 'Cache');
      # do stuffs
      HTTP::Tiny::Plugin->set_plugins(@old_plugins);
  }
@@ -178,10 +179,14 @@ from the status of the plugin called last.
 Skip execution of hook-related method. For example, if we return 99 in
 L</before_request> then C<request()> will be skipped.
 
+Will also immediately stop hook execution for that stage.
+
 =item * 98
 
 Repeat execution of hook-related method. For example, if we return 98 in
 L</after_request> then C<request()> will be repeated.
+
+Will also immediately stop hook execution for that stage.
 
 =back
 
