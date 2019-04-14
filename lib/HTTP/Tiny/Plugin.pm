@@ -242,3 +242,5 @@ A JSON-encoded array. If set, will call L</set_plugins> with the decoded value.
 =head1 SEE ALSO
 
 L<HTTP::Tiny>
+
+L<LWP::UserAgent::Plugin>
