@@ -244,3 +244,5 @@ A JSON-encoded array. If set, will call L</set_plugins> with the decoded value.
 L<HTTP::Tiny>
 
 L<LWP::UserAgent::Plugin>
+
+L<HTTP::Tiny::Patch::Plugin>
