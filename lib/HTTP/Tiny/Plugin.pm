@@ -61,11 +61,11 @@ sub _run_hooks {
 }
 
 sub request {
-    my ($self, $method, $url, $options) = @_;
+    my $r = {http=>$_[0], ua=>$_[0], argv=>[@_]};
+    my $self = shift;
 
-    my $r = {http=>$self, ua=>$self, argv=>\@_};
     while (1) {
-        $r->{response} = $self->SUPER::request($method, $url, $options)
+        $r->{response} = $self->SUPER::request(@_)
             unless $self->_run_hooks('before_request', {all=>1}, $r) == 99;
         last unless $self->_run_hooks('after_request', {all=>1}, $r) == 98;
     }
