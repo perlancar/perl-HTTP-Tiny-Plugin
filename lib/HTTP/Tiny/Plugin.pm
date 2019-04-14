@@ -63,7 +63,7 @@ sub _run_hooks {
 sub request {
     my ($self, $method, $url, $options) = @_;
 
-    my $r = {ht=>$self, argv=>\@_};
+    my $r = {http=>$self, ua=>$self, argv=>\@_};
     while (1) {
         $r->{response} = $self->SUPER::request($method, $url, $options)
             unless $self->_run_hooks('before_request', {all=>1}, $r) == 99;
@@ -129,17 +129,17 @@ information. Keys that are common for all hooks:
 
 Hash.
 
-=item * ht
+=item * http
 
 Object. The HTTP::Tiny object.
+
+=item * ua
+
+Like C<http>.
 
 =item * hook
 
 The current hook name.
-
-=item * hook
-
-The hook name.
 
 =item * argv
 
