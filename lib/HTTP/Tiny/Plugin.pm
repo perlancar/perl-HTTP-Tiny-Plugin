@@ -10,6 +10,13 @@ use Log::ger;
 
 use parent 'HTTP::Tiny';
 
+if ($ENV{HTTP_TINY_PLUGINS}) {
+    require JSON::PP;
+    __PACKAGE__->set_plugins(@{
+        JSON::PP::decode_json($ENV{HTTP_TINY_PLUGINS})
+      });
+}
+
 sub import {
     my $class = shift;
     $class->set_plugins(@_) if @_;
@@ -226,6 +233,10 @@ configure the plugin.
 
 
 =head1 ENVIRONMENT
+
+=head2 HTTP_TINY_PLUGINS
+
+A JSON-encoded array. If set, will call L</set_plugins> with the decoded value.
 
 
 =head1 SEE ALSO
