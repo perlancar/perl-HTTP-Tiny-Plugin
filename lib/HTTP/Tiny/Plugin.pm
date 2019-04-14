@@ -12,7 +12,7 @@ use parent 'HTTP::Tiny';
 
 sub import {
     my $class = shift;
-    $class->set_plugins(@_);
+    $class->set_plugins(@_) if @_;
 }
 
 my @plugins;
